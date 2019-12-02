@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 import urllib.request
+import requests
+from io import BytesIO
+import gzip
 
 
 class Crawl:
-    def getHtml(self, url):
-        response = urllib.request.urlopen(url)
-        html = str(response.read().decode("utf-8","ignore"))
+    def getHtml(self, url, code):
+        html = requests.get(url)
+        html.encoding = code
+        return html.text
+
+    def getHtml2(self, url, code):
+        req_one = urllib.request.Request(url)
+        res_one = urllib.request.urlopen(req_one)
+        response = res_one.read()
+        if isinstance(response, bytes):
+            response = response.decode(code)
+        html = str(response.decode(code))
+        # buff = BytesIO(html)
+        # f = gzip.GzipFile(fileobj=buff)
+        # res = f.read().decode('utf-8')
         return html
 
     def saveHtml(self, path, file_name, file_content):
