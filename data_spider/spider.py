@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 import urllib.request
 import uuid
+from data_spider.parse import Parser
+from data_spider.crawl import Crawl
+import configparser
 
-from csdn_spider.parse import Parser
-from csdn_spider.crawl import Crawl
-
-aurl = "https://www.csdn.net"
+cf = configparser.ConfigParser()
+cf.read("setting.ini")
+aurl = cf.get("jianshu","base_url")
 url = {}
 crawl = Crawl()
 html = crawl.getHtml(aurl,"utf-8")
-crawl.saveHtml("C:\\work\\data\\HTML\\", "csdn", str(html))
+crawl.saveHtml("C:\\work\\data\\HTML\\", "jianshu", str(html))
 parse = Parser(aurl)
 blist = parse.bParse(html)
 list = dict((key, value) for key, value in blist.items() if len(str(key)) < 5)
@@ -31,7 +33,7 @@ def getAirtle(ulist):
     for list in ulist:
         for key, value in list.items():
             aparse = Parser(aurl)
-            airtleHtml = crawl.getHtml2(value,"GB18030")
+            airtleHtml = crawl.getHtml(value,"utf-8")
             crawl.saveHtml("C:\\work\\data\\HTML\\content\\", str(uuid.uuid4()), str(airtleHtml))
             context = aparse.article_parse(airtleHtml)
             if context != None:
@@ -39,7 +41,7 @@ def getAirtle(ulist):
 
 
 def run():
-    getAirtle(getUrl(list,"article/details"))
+    getAirtle(getUrl(list, cf.get("jianshu","filter")))
 
 
 if __name__ == '__main__':

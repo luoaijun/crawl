@@ -3,11 +3,16 @@ import urllib.request
 import requests
 from io import BytesIO
 import gzip
+import json
+from data_spider.api import getIP
+
+proxy = getIP()
 
 
 class Crawl:
     def getHtml(self, url, code):
-        html = requests.get(url)
+        dict = json.loads(proxy)
+        html = requests.get(url, dict, timeout=1000)
         html.encoding = code
         return html.text
 
