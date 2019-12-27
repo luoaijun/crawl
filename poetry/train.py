@@ -18,8 +18,8 @@
 # ------------------------------------------------------------------------
 import os
 import tensorflow as tf
-from poems.model import rnn_model
-from poems.poems import process_poems, generate_batch
+from poetry.poems.model import rnn_model
+from poetry.poems.poems import process_poems, generate_batch
 
 tf.app.flags.DEFINE_integer('batch_size', 64, 'batch size.')
 tf.app.flags.DEFINE_float('learning_rate', 0.01, 'learning rate.')

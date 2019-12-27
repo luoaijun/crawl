@@ -16,16 +16,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ------------------------------------------------------------------------
+import os
+from os import path
+
 import tensorflow as tf
-from poems.model import rnn_model
-from poems.poems import process_poems
+from poetry.poems.model import rnn_model
+from poetry.poems.poems import process_poems
 import numpy as np
 
 start_token = 'B'
 end_token = 'E'
-model_dir = './model/'
-corpus_file = './data/poems.txt'
 
+d = path.dirname(__file__)
+
+model_dir = d+'/model/'
+corpus_file = d+'/data/poems.txt'
 lr = 0.0002
 
 
