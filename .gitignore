@@ -1,0 +1,7 @@
+.idea
+.settings
+blog
+target
+blog-app/node_modules
+poetry/data/
+poetry/model/
